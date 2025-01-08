@@ -17,10 +17,10 @@ npm run deploy
 
 Use cryptoflare by [binding](https://developers.cloudflare.com/workers/runtime-apis/bindings/service-bindings) the cryptoflare worker to another worker, then call:
 
-```js
-const result = await (await env.CRYPTOFLARE.fetch(ENDPOINT, {
+```TS
+const result = await (await env.CRYPTOFLARE.fetch($ENDPOINT, {
   method: 'POST',
-  body: JSON.stringify(DATA),
+  body: JSON.stringify($DATA),
 })).json();
 ```
 
@@ -29,30 +29,30 @@ const result = await (await env.CRYPTOFLARE.fetch(ENDPOINT, {
 #### Hash
 
 - Endpoints:
-  - `/argon2/hash`, with available `options`:
-    ```JSON
+  - `/argon2/hash`, with available `Option`:
+    ```TS
     {
-      "time_cost": 2,
-      "memory_cost": 19456, // = 19 * 1024
-      "parallelism": 1
+      "time_cost": number, /* defaults to 2 */
+      "memory_cost": number, /* defaults to 19 * 1024 = 19456 */
+      "parallelism": number /* defaults to 1 */
     }
     ```
-  - `/bcrypt/hash`, with available `options`:
-    ```JSON
-    { "work_factor": 12 }
+  - `/bcrypt/hash`, with available `Option`:
+    ```TS
+    { "work_factor": number /* defaults to 12 */ }
     ```
 
 - Request:
-  ```JSON
+  ```TS
   {
-    "password": "thePasswordToHash!" // ,
-    // "options": options
+    "password": string,
+    "options"?: Option
   }
   ```
 
 - Response:
-  ```JSON
-  { "hash": "theResultingHash" }
+  ```TS
+  { "hash": string }
   ```
 
 #### Verify
@@ -62,16 +62,16 @@ const result = await (await env.CRYPTOFLARE.fetch(ENDPOINT, {
   - `/bcrypt/verify`
 
 - Request:
-  ```JSON
+  ```TS
   {
-    "hash": "passwordHash",
-    "password": "plainTextPassword"
+    "hash": string,
+    "password": string
   }
   ```
 
 - Response:
-  ```JSON
-  { "result": true|false }
+  ```TS
+  { "result": boolean }
   ```
 
 ## Contributing
